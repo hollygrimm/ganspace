@@ -92,6 +92,18 @@ It is possible to import trained StyleGAN and StyleGAN2 weights from TensorFlow 
 
 ### StyleGAN2
 1. Follow the instructions in [models/stylegan2/stylegan2-pytorch/README.md](https://github.com/harskish/stylegan2-pytorch/blob/master/README.md#convert-weight-from-official-checkpoints). Make sure to use the fork in this specific folder when converting the weights for compatibility reasons.
+
+https://colab.research.google.com/drive/1OtRXSTK720kBVfkP_YboTJvxC5-7iAak#scrollTo=BV5E23bvJ-5X
+
+add:
+!pip install torch==1.5.0 torchvision==0.6.0
+
+from google.colab import drive
+drive.mount(‘/content/gdrive’)
+
+!python stylegan2-pytorch/convert_weight.py --repo stylegan2 /content/gdrive/MyDrive/satellite.pkl --channel_multiplier 1
+
+
 2. Save the converted checkpoint as `checkpoints/stylegan2/<dataset>_<resolution>.pt`.
 3. Modify methods `__init__()`, `download_checkpoint()` in `models/wrappers.py` under class StyleGAN2.
 
