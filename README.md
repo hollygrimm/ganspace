@@ -26,6 +26,9 @@ This repository includes versions of BigGAN, StyleGAN, and StyleGAN2 modified to
 # Explore BigGAN-deep husky
 python interactive.py --model=BigGAN-512 --class=husky --layer=generator.gen_z -n=1_000_000
 
+# Explore StyleGAN2 satellite in W space
+python interactive.py --model=StyleGAN2 --class=satellite --layer=style --use_w -n=1_000_000 -b=10_000
+
 # Explore StyleGAN2 ffhq in W space
 python interactive.py --model=StyleGAN2 --class=ffhq --layer=style --use_w -n=1_000_000 -b=10_000
 

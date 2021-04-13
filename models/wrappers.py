@@ -105,6 +105,7 @@ class StyleGAN2(BaseModel):
         # Image widths
         configs = {
             # Converted NVIDIA official
+            'satellite': 512,
             'ffhq': 1024,
             'car': 512,
             'cat': 256,
@@ -137,6 +138,7 @@ class StyleGAN2(BaseModel):
     # URLs created with https://sites.google.com/site/gdocs2direct/
     def download_checkpoint(self, outfile):
         checkpoints = {
+            'satellite': 'http://x.com',
             'horse': 'https://drive.google.com/uc?export=download&id=18SkqWAkgt0fIwDEf2pqeaenNi4OoCo-0',
             'ffhq': 'https://drive.google.com/uc?export=download&id=1FJRwzAkV-XWbxgTwxEmEACvuqF5DsBiV',
             'church': 'https://drive.google.com/uc?export=download&id=1HFM694112b_im01JT7wop0faftw9ty5g',
@@ -154,7 +156,13 @@ class StyleGAN2(BaseModel):
         checkpoint_root = os.environ.get('GANCONTROL_CHECKPOINT_DIR', Path(__file__).parent / 'checkpoints')
         checkpoint = Path(checkpoint_root) / f'stylegan2/stylegan2_{self.outclass}_{self.resolution}.pt'
         
-        self.model = stylegan2.Generator(self.resolution, 512, 8).to(self.device)
+        # HG ADDED: channel_multiplier
+        if self.outclass == 'satellite':
+            channel_multiplier = 1 # config-e
+        else:
+            channel_multiplier = 2 # config-f
+
+        self.model = stylegan2.Generator(self.resolution, 512, 8, channel_multiplier=channel_multiplier).to(self.device)
 
         if not checkpoint.is_file():
             os.makedirs(checkpoint.parent, exist_ok=True)
